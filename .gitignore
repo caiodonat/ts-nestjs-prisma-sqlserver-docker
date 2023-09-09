@@ -1,0 +1,16 @@
+# compiled output
+/dist
+/docs
+
+# Node build artifacts
+/node_modules
+package-lock.json
+
+# Local development
+*.env
+*.env.*
+*.dev
+.vscode
+
+# Uploads
+/uploads
