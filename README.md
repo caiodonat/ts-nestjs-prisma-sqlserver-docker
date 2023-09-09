@@ -4,7 +4,7 @@
 
 -   Language : `TypeScript` (5.1.3)
 -   Web Application framework : `NestJS` (10.0.0)
--   Database : `PostgreSQL` (15.4-1)
+-   Database : `SQL Server` (2022)
 -   Object-Relational Mapping (ORM) : `Prisma` (5.2.0)
 -   Package manager : `NPM` (9.8.0)
 
@@ -17,8 +17,8 @@
 
 ### Development Environment
 
--   OS : `Win` (11) | `WSL 2` (Ubuntu 20.04.6)
--   IDE : `VS Code` (^1.81.1)
+-   OS : `Win` (11) | `WSL 2` (Ubuntu 22.04)
+-   IDE : `VS Code` (^1.82.0)
 
 ---
 
