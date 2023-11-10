@@ -4,7 +4,6 @@ import { UserRepository } from './user.repository';
 import { UserController } from './user.controller';
 
 import { DatabaseModule } from '../database/database.module';
-import { DatabaseService } from '../database/database.service';
 import { JwtModule } from '@nestjs/jwt';
 
 
@@ -14,6 +13,7 @@ import { JwtModule } from '@nestjs/jwt';
 		signOptions: { expiresIn: '1d' }
 	})],
 	controllers: [UserController],
-	providers: [UserService, UserRepository, DatabaseService],
+	providers: [UserService, UserRepository],
+	exports: [UserService]
 })
 export class UserModule { }
