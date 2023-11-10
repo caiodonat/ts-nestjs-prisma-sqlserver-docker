@@ -1,0 +1,56 @@
+///
+/// @version v0.2.0
+///
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    // ids \/
+    id     Int @id @default(autoincrement())
+    roleId Int? @map("role_id")
+    // ids /\
+
+    // core \/
+    firstName String @map("first_name")
+    lastName  String @map("last_name")
+    email     String @unique
+    password  String
+    phone     String
+    // core /\
+
+    // support \/
+    recoverCode String?   @map("recover_code")
+    verifiedAt  DateTime? @map("verified_at")
+    createdAt   DateTime  @default(now()) @map("created_at")
+    updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at")
+    // support /\
+
+    // relations \/
+    role Role? @relation(fields: [roleId], references: [id])
+    // relations /\
+
+    @@map("users")
+}
+
+model Role {
+    // ids \/
+    id Int @id @default(autoincrement())
+    // ids /\
+
+    // core \/
+    title       String
+    description String
+    // core /\
+
+    // relations \/
+    userRelation User[]
+    // relations /\
+
+    @@map("roles")
+}

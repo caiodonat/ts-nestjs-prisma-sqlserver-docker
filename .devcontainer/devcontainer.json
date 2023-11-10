@@ -1,8 +1,8 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node-postgres
 {
-	"name": "ts-nestjs-prisma-docker",
-	"dockerComposeFile": "docker-compose.yml",
+	"name": "ts-nestjs-prisma-psql-docker",
+	"dockerComposeFile": "docker-compose.yaml",
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	// Features to add to the dev container. More info: https://containers.dev/features.
@@ -12,10 +12,10 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// This can be used to network with other containers or with the host.
-	// "forwardPorts": [3000, 5432],
+	"forwardPorts": [3000, 5555],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "echo Successes started"
+	"postAttachCommand": "Dev Container Successes started..."
 
 	// Configure tool-specific properties.
 	// "customizations": {},

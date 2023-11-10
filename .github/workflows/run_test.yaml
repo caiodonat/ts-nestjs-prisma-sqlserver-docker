@@ -1,29 +1,65 @@
-name: Node.js CI
+# name: Node.js CI
 
-on:
-  push:
-    branches: ["*"]
+# on:
+#   push:
+#     branches: ["*"]
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     env:
+#       DATABASE_URL: postgresql://prisma:prisma@localhost:5433/tests
+#       JWT_SECRET: 3da541559918a808c2402bba5012f6c60b27661c
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-node@v1
+#         with:
+#           node-version: "20.x"
+
+#       - name: Set NPM
+#         run: npm install
+
+#       - name: Up PostgresSQL container
+#         run: docker-compose up -d
+
+#       - name: Set DB
+#         run: npx prisma migrate reset --force
+
+#       - name: Run tests
+#         run: npm run test --verbose --silent
+name: grading-app
+on: push
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps TCP port 5432 on service container to the host
+          - 5432:5432
     env:
-      DATABASE_URL: postgresql://prisma:prisma@localhost:5433/tests
-      JWT_SECRET: 3da541559918a808c2402bba5012f6c60b27661c
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/grading-app
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: "20.x"
-
-      - name: Set NPM
-        run: npm install
-
-      - name: Up PostgresSQL container
-        run: docker-compose up -d
-
-      - name: Set DB
-        run: npx prisma migrate reset --force
-
-      - name: Run tests
-        run: npm run test --verbose --silent
+          node-version: '12.x'
+      - run: npm ci
+      # run the migration in the test database
+      - run: npm run db:push
+      - run: npm run db:seed
+      - run: npm run test

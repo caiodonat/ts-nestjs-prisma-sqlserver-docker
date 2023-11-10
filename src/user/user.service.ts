@@ -1,41 +1,96 @@
 import { Injectable } from '@nestjs/common';
-
+import * as Bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 import { CreateUserSchema, CreateUserType } from './dto/create-user.dto';
-// import { ReadUserType } from './dto/read-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
-import { UserEntity, UserModel } from './entities/user.entity';
+import { UpdateUserSchema, UpdateUserType } from './dto/update-user.dto';
+import { UserRepository } from './user.repository';
+import { UserSchema, UserDb, UserType } from './user.entity';
+import { AppException } from '../app.exception';
 
 @Injectable()
 export class UserService {
-	constructor(private entity: UserEntity) {}
 
-	async create(newUserData: CreateUserType): Promise<UserModel> {
-		// let newUser: UserModel;
-		const userContract = CreateUserSchema.safeParse(newUserData);
+	private readonly _validator = UserSchema;
 
-		if (!userContract.success) {
-			throw {
-				message: userContract.error.errors /* .map((e) => e.message) */,
-				status: 400,
-			};
+	constructor(
+		private readonly _repository: UserRepository,
+		private readonly _jwtService: JwtService,
+	) {
+	}
+
+	async create(newUser: CreateUserType): Promise<UserDb> {
+		try {
+			const createValidator = CreateUserSchema;
+
+			const userDTO = await createValidator.parseAsync(newUser);
+
+			userDTO.password = await Bcrypt.hash(userDTO.password, 10);
+
+			return await this._repository.create(newUser)
+		} catch (error) {
+			throw error;
 		}
-		console.log(userContract.data);
-		return await this.entity.createUser(userContract.data);
+
 	}
 
-	async findAll(): Promise<UserModel[]> {
-		return await this.entity.readAllUser();
+	async findAll(): Promise<UserDb[]> {
+		try {
+			return await this._repository.selectAll();
+		} catch (error) {
+			throw error;
+		}
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} user`;
+	async findOne(userId: UserType['id']): Promise<UserDb> {
+		try {
+			// Validando apenas uma propriedade + convertendo em número
+			const userIdDTO = await this._validator.shape
+				.id.parseAsync(userId);
+
+			return await this._repository.selectById(userIdDTO?.valueOf());
+		} catch (error) {
+			throw error;
+		}
 	}
 
-	update(id: number) {
-		return `This action updates a #${id} user`;
+	async login(email: UserType['email'], password: UserType['password'])/* : Promise<UserDb> */ {
+		try {
+			const validatedEmail = await this._validator.shape
+				.email.parseAsync(email);
+
+			const targetUser = await this._repository.selectByEmail(validatedEmail);
+
+			if (!Bcrypt.compareSync(password, targetUser.password)) {
+				throw new AppException(401, ["Senha invalida"]);
+			}
+			
+			// @todo Migrar para função separada
+			return await this._jwtService.signAsync({ userId: targetUser.id });
+		} catch (error) {
+			throw error;
+		}
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} user`;
+	async update(
+		userId: UserType['id'],
+		newUserData: UpdateUserType
+	) {
+		const userIdDTO = await this._validator.shape
+			.id.parseAsync(userId);
+
+		const updateDTO = await UpdateUserSchema.parseAsync(newUserData);
+
+		// updateDTO.password = await Bcrypt.hash(updateDTO.password, 10);
+
+		await this._repository.updateById(userIdDTO?.valueOf(), updateDTO);
+	}
+
+	async deleteById(
+		userId: UserType['id']
+	) {
+		const userIdDTO = await this._validator.shape
+			.id.parseAsync(userId);
+
+		await this._repository.deleteById(userIdDTO?.valueOf());
 	}
 }

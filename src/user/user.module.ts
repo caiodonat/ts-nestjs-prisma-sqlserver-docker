@@ -1,14 +1,19 @@
 import { Module } from '@nestjs/common';
-
 import { UserService } from './user.service';
+import { UserRepository } from './user.repository';
 import { UserController } from './user.controller';
-import { UserEntity } from './entities/user.entity';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { PrismaModule } from 'src/prisma/prisma.module';
+
+import { DatabaseModule } from '../database/database.module';
+import { DatabaseService } from '../database/database.service';
+import { JwtModule } from '@nestjs/jwt';
+
 
 @Module({
-	imports: [PrismaModule],
-	providers: [UserService, UserEntity, PrismaService],
+	imports: [DatabaseModule, JwtModule.register({
+		secret: process.env.JWT_SECRET,
+		signOptions: { expiresIn: '1d' }
+	})],
 	controllers: [UserController],
+	providers: [UserService, UserRepository, DatabaseService],
 })
-export class UserModule {}
+export class UserModule { }
