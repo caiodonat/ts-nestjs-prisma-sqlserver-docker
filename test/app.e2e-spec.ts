@@ -5,6 +5,7 @@ import * as request from 'supertest';
 import { UserDb } from 'src/user/user.entity';
 import { UserModule } from '../src/user/user.module';
 import { UserRepository } from 'src/user/user.repository';
+import { UserService } from 'src/user/user.service';
 
 describe('AppController (e2e)', () => {
 	const rndInt = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
@@ -15,7 +16,7 @@ describe('AppController (e2e)', () => {
 	beforeAll(async () => {
 	  const moduleRef = await Test.createTestingModule({
 		imports: [UserModule],
-		providers: [UserRepository]
+		providers: [UserService, UserRepository]
 	  })
 		.compile();
   
