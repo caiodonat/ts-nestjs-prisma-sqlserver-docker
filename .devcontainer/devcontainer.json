@@ -15,7 +15,9 @@
 	"forwardPorts": [3000, 5555],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postAttachCommand": "Dev Container Successes started..."
+	"postAttachCommand": [
+		"echo Dev Container Successes started..."
+	]
 
 	// Configure tool-specific properties.
 	// "customizations": {},
