@@ -1,5 +1,6 @@
+# /docker-compose.yaml (raiz do projeto)
+
 version: "3.8"
-# name: ts-nestjs-prisma-sqlserver-docker # nofing
 
 services:
   postgres:
@@ -16,6 +17,11 @@ services:
       - postgres-data:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '1.0GB'
 
   app:
     build:
@@ -35,6 +41,11 @@ services:
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
     ports:
       - '3000:3000'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '1.0GB'
 
 
 networks:

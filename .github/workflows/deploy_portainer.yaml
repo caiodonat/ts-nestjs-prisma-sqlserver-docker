@@ -14,4 +14,6 @@ jobs:
       - name: Invoke deployment hook
         uses: distributhor/workflow-webhook@v3
         with:
+          # @todo 
+          # - [ ] Substituir o valor para a URL do nosso 'Servidor FINDES'.
           webhook_url: ${{ secrets.WEBHOOK_URL }}
