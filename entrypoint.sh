@@ -2,7 +2,7 @@
 
 npx prisma generate
 
-RUN npm run build
+npm run build
 
 npx prisma db push
 
