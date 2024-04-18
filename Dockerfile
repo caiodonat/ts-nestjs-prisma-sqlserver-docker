@@ -1,6 +1,6 @@
 FROM node:20-alpine3.18
 
-WORKDIR /app
+# WORKDIR /app
 
 COPY package*.json ./
 
@@ -22,6 +22,6 @@ RUN chmod +x entrypoint.sh
 
 RUN pwd >> tt.txt
 
-ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
-CMD [ "npm", "run", "start:dev" ]
+# CMD [ "npm", "run", "start:dev" ]
