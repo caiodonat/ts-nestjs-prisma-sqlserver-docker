@@ -1,0 +1,17 @@
+name: Deploy Portainer
+
+on:
+  workflow_run:
+    workflows: [Test Build application]
+    types:
+      - completed
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo "Deploy Portainer 🎉"
+
+      - name: Invoke deployment hook
+        uses: distributhor/workflow-webhook@v3
+        with:
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
