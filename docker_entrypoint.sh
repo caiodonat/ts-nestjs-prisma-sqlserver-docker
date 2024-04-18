@@ -14,7 +14,7 @@ npm run build
 # Setup do ORM (Prisma)
 
 # # if $some_parameter run `npx prisma migrate reset`
-npx prisma migrate reset
+npx prisma migrate reset --force
 # npx prisma migrate deploy
 
 # CLI final para executar a aplicação
