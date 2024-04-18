@@ -5,7 +5,7 @@ WORKDIR /
 COPY . .
 
 
-RUN npm ci
+RUN npm i
 # Prisma Setup
 
 RUN chmod +x entrypoint.sh
