@@ -2,12 +2,13 @@ FROM node:20-alpine3.18
 
 # WORKDIR /app
 
-COPY package*.json ./
+# COPY package*.json ./
 
-RUN npm install --force
+COPY . /app
 
-COPY . .
+RUN cd /app
 
+RUN npm ci
 # Prisma Setup
 
 # ARG DATABASE_URL="postgres://postgres:postgres@postgres:5432/postgres"
@@ -22,6 +23,6 @@ RUN chmod +x entrypoint.sh
 
 RUN pwd >> tt.txt
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 
 # CMD [ "npm", "run", "start:dev" ]
