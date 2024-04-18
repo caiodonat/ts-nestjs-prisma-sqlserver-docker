@@ -2,6 +2,21 @@ version: "3.8"
 # name: ts-nestjs-prisma-sqlserver-docker # nofing
 
 services:
+  postgres:
+    image: postgres:15.4
+    hostname: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - backend
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
   app:
     build:
       # Path of Dockerfile
@@ -20,20 +35,6 @@ services:
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
     ports:
       - '3000:3000'
-
-  postgres:
-    image: postgres:15.4
-    restart: on-failure
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-    networks:
-      - backend
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
 
 networks:
   backend:
