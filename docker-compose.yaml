@@ -3,9 +3,9 @@ version: "3.8"
 
 services:
   postgres:
-    image: postgres:15.4
+    image: postgres:15.3
     hostname: postgres
-    restart: on-failure
+    restart: always
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
@@ -31,8 +31,8 @@ services:
     volumes:
       - ./src:/app/src
     environment:
-      - PORT=${PORT}
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+      - PORT=3000
+      - DATABASE_URL="postgres://postgres:postgres@postgres:5432/postgres"
     ports:
       - '3000:3000'
 

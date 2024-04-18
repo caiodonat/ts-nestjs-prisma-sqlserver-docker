@@ -10,10 +10,18 @@ COPY . .
 
 # Prisma Setup
 
+# ARG DATABASE_URL="postgres://postgres:postgres@postgres:5432/postgres"
+
 RUN npx prisma generate
 
-RUN npx prisma db push
+# RUN npx prisma db push
 
 RUN npm run build
+
+RUN chmod +x entrypoint.sh
+
+RUN pwd >> tt.txt
+
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 CMD [ "npm", "run", "start:dev" ]
