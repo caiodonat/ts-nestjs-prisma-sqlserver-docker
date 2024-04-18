@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
 	console.time('Restart');
+	console.debug(process.env.DATABASE_URL)
 
 	const app = await NestFactory.create(AppModule, {
 		logger: ['debug', 'error', 'warn'],

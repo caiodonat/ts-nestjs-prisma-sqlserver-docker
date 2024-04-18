@@ -32,9 +32,10 @@ services:
       - ./src:/app/src
     environment:
       - PORT=3000
-      - DATABASE_URL="postgres://postgres:postgres@postgres:5432/postgres"
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
     ports:
       - '3000:3000'
+
 
 networks:
   backend:
