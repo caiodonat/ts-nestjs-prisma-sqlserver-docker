@@ -29,5 +29,5 @@ jobs:
         run: docker compose -f docker-compose.yaml build
 
       - name: Up image
-        run: docker compose -f docker-compose.prod.yml up
+        run: docker compose -f docker-compose.yaml up
         # run: docker compose up -f docker-compose.yaml --build
