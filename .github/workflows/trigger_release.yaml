@@ -3,7 +3,7 @@ run-name: Trigger new Release
 
 on:
   release:
-    types: [published]
+    types: [released]
 
 jobs:
   build:
