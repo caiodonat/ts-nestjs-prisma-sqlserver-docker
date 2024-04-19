@@ -8,9 +8,9 @@ services:
     hostname: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
+      POSTGRES_USER: ${DATABASE_USER:-postgres}
+      POSTGRES_DB: ${DATABASE_DB:-postgres}
     networks:
       - backend
     volumes:
@@ -37,10 +37,10 @@ services:
     volumes:
       - ./src:/app/src
     environment:
-      - PORT=3000
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+      - PORT=${APP_PORT:-3002}
+      - DATABASE_URL=postgres://${DATABASE_USER:-postgres}:${DATABASE_PASSWORD:-postgres}@postgres:5432/${DATABASE_DB:-postgres}
     ports:
-      - '3000:3000'
+      - '${APP_PORT:-3002}:${APP_PORT:-3002}'
     deploy:
       resources:
         limits:

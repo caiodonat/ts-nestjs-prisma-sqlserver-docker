@@ -17,17 +17,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      # -
-      #   name: Build
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     file: ./Dockerfile
-      #     push: false
 
       - name: Build images
         run: docker compose -f docker-compose.yaml build
 
       - name: Up image
         run: docker compose -f docker-compose.yaml up
-        # run: docker compose up -f docker-compose.yaml --build
