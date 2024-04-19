@@ -1,0 +1,13 @@
+name: trigger-new-release
+run-name: Trigger new Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo "New Release Detected"
+      

@@ -1,8 +1,10 @@
 name: Deploy Portainer
+run-name: deploy-portainer
 
 on:
   workflow_run:
-    workflows: [Test Build application]
+    workflows:
+      - "trigger-new-release"
     types:
       - completed
 jobs:
@@ -11,9 +13,11 @@ jobs:
     steps:
       - run: echo "Deploy Portainer 🎉"
 
+      # É necessário configurar dentro do repositório esse "segredo".
       - name: Invoke deployment hook
         uses: distributhor/workflow-webhook@v3
         with:
           # @todo 
-          # - [ ] Substituir o valor para a URL do nosso 'Servidor FINDES'.
+          # - [ ] Substituir o valor para a URL da Imagem Docker dentro do
+          #  'Servidor FINDES'.
           webhook_url: ${{ secrets.WEBHOOK_URL }}
