@@ -39,9 +39,9 @@
 
 ### Required Environment Variables
 
-- `DATABASE_URL`:
-- `APP_PORT`: 
+- `APP_PORT`: Define a porta em que a aplicação ficara 'ouvindo'.
 - `BUILD_TARGET`?: (opcional) Define quais passos será realizado para "executar" a aplicação. valor padrão: `dev`
+- `DATABASE_URL`: String de conexão com o banco de dados.
 - `DATABASE_PASSWORD`: 
 - `DATABASE_USER`: 
 - `DATABASE_DB`: 
