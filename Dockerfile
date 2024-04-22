@@ -1,17 +1,33 @@
 # /Dockerfile (raiz do projeto)
 
 # Sempre utilizar a variante `alpine`.
-FROM node:20-alpine3.18
+FROM node:20-alpine3.18 AS base
+RUN echo "FROM node:20-alpine3.18 AS base"
 
-# Boa pratica separa o *código fonte* dos demais arquivos do sistema.
-# WORKDIR /app
-WORKDIR /
+WORKDIR /app
+
+COPY package*.json ./
 
 COPY . .
 
-# Garantindo que nosso script de inicialização tenha as permições necessárias para
-#  funcionar corretamente.
-RUN chmod +x docker_entrypoint.sh
 
-# Nas variantes `alpine` é necessário utiliza `sh` para executar arquivos de scripts (.sh)
-ENTRYPOINT ["sh", "docker_entrypoint.sh"]
+FROM base AS dev
+RUN echo "base AS dev"
+
+RUN npm i
+RUN npx prisma generate
+RUN npm run db:migrate:dev
+
+CMD [  "npm", "run", "start:dev" ]
+
+
+FROM base AS prod
+RUN echo "base AS prod"
+
+RUN npm ci
+RUN npx prisma generate
+RUN npm run build
+
+RUN npm run db:migrate:prod
+
+CMD [  "npm", "run", "start:prod" ]

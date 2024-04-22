@@ -1,22 +1,23 @@
 # /docker-compose.yaml (raiz do projeto)
-
-version: "3.8"
+name: bk_998877
 
 services:
+  
   postgres:
+    container_name: ${COMPOSE_PROJECT_NAME}-db
     image: postgres:15.3
-    hostname: postgres
+    hostname: "postgres"
     restart: always
     environment:
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
-      POSTGRES_USER: ${DATABASE_USER:-postgres}
-      POSTGRES_DB: ${DATABASE_DB:-postgres}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_DB}
     networks:
       - backend
     volumes:
       - postgres-data:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - '${DATABASE_POST}:${DATABASE_POST}'
     deploy:
       resources:
         limits:
@@ -24,32 +25,31 @@ services:
           memory: '1.0GB'
 
   app:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
     build:
-      # Path of Dockerfile
       context: .
       dockerfile: Dockerfile
-    command: sleep infinity
-    restart: on-failure
+      # Require: `.env.BUILD_TARGET`
+      target: ${BUILD_TARGET:-dev}
+    restart: unless-stopped
     depends_on:
-      - postgres
+      - "postgres"
     networks:
       - backend
-    volumes:
-      - ./src:/app/src
     environment:
-      - PORT=${APP_PORT:-3002}
-      - DATABASE_URL=postgres://${DATABASE_USER:-postgres}:${DATABASE_PASSWORD:-postgres}@postgres:5432/${DATABASE_DB:-postgres}
+      - PORT=${APP_PORT}
+      - DATABASE_URL=${DATABASE_URL}
     ports:
-      - '${APP_PORT:-3002}:${APP_PORT:-3002}'
+      - '${APP_PORT}:${APP_PORT}'
     deploy:
       resources:
         limits:
           cpus: '0.5'
           memory: '1.0GB'
 
-
 networks:
   backend:
+    driver: bridge
 
 volumes:
   postgres-data:

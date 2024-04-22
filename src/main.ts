@@ -6,6 +6,10 @@ import { AppModule } from './app.module';
 async function bootstrap() {
 	console.time('Restart');
 
+	const APP_PORT: string = process.env.APP_PORT as string || "3333"
+
+	console.debug(process.env);
+
 	const app = await NestFactory.create(AppModule, {
 		logger: ['debug', 'error', 'warn'],
 	});
@@ -34,6 +38,6 @@ async function bootstrap() {
 		],
 	});
 
-	await app.listen(3000, () => console.timeEnd('Restart'));
+	await app.listen(APP_PORT, () => console.timeEnd('Restart'));
 }
 bootstrap();

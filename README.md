@@ -1,3 +1,10 @@
+# Burj Khalifa
+
+## Info
+
+- SGT: `998877`
+- Sort name: [`BK-998877`, `bk_998877`]
+
 ## Tech Stack
 
 ### Main Techs
@@ -19,6 +26,25 @@
 
 -   OS : `Win` (11) | `WSL 2` (Ubuntu 22.04)
 -   IDE : `VS Code` (^1.82.0)
+
+---
+
+## Getting Started
+
+> git clone tt.git
+
+> cd tt
+
+> 
+
+### Required Environment Variables
+
+- `DATABASE_URL`:
+- `APP_PORT`: 
+- `BUILD_TARGET`?: (opcional) Define quais passos será realizado para "executar" a aplicação. valor padrão: `dev`
+- `DATABASE_PASSWORD`: 
+- `DATABASE_USER`: 
+- `DATABASE_DB`: 
 
 ---
 
