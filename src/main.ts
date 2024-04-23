@@ -8,8 +8,6 @@ async function bootstrap() {
 
 	const APP_PORT: string = process.env.APP_PORT as string || "3333"
 
-	console.debug(process.env);
-
 	const app = await NestFactory.create(AppModule, {
 		logger: ['debug', 'error', 'warn'],
 	});
