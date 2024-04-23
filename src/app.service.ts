@@ -9,6 +9,10 @@ export class AppService {
 	 *  (Compodoc).
 	 */
 	getHello(): string {
-		return 'Hello World!';
+		const message: string = "Hello World!";
+		
+		return `${message}`;
 	}
 }
+
+// return 'Hello World!';

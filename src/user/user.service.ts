@@ -30,7 +30,6 @@ export class UserService {
 		} catch (error) {
 			throw error;
 		}
-
 	}
 
 	async findAll(): Promise<UserDb[]> {
