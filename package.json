@@ -22,7 +22,8 @@
     "docs:host": "compodoc -p tsconfig.json -d docs/ -s",
     "db:reset": "prisma migrate reset --force",
     "db:migrate:prod": "prisma migrate deploy",
-    "db:migrate:dev": "prisma db push"
+    "db:migrate:dev": "prisma db push",
+    "start:prod:migrate": "prisma migrate deploy && node dist/src/main"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
