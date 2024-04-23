@@ -27,7 +27,7 @@ RUN echo "base AS prod"
 RUN npm ci
 RUN npx prisma generate
 RUN npm run build
+RUN npm run db:migrate:prod
 
-# RUN npm run db:migrate:prod
 
 CMD [  "npm", "run", "start:prod" ]
