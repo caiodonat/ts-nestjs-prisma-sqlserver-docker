@@ -54,3 +54,10 @@ model Role {
 
     @@map("roles")
 }
+
+
+model TestTable {
+    id String @id @default(uuid())
+
+    any String?
+}

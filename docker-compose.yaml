@@ -5,7 +5,7 @@ services:
   
   # postgres:
   #   container_name: ${COMPOSE_PROJECT_NAME}-db
-  #   image: postgres:15.3
+  #   image: postgres:15.6
   #   hostname: "postgres"
   #   restart: always
   #   environment:
@@ -34,8 +34,8 @@ services:
     restart: unless-stopped
     # depends_on:
     #   - "postgres"
-    # networks:
-    #   - backend
+    networks:
+      - backend
     environment:
       - PORT=${APP_PORT}
       - DATABASE_URL=${DATABASE_URL}
@@ -47,9 +47,8 @@ services:
           cpus: '0.5'
           memory: '1.0GB'
 
-# networks:
-#   backend:
-#     driver: bridge
+networks:
+  backend:
 
 # volumes:
 #   postgres-data:
