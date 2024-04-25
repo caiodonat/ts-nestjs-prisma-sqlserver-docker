@@ -31,7 +31,7 @@
 
 ## Getting Started
 
-> git clone tt.git
+> git clone git.git
 
 > cd tt
 
