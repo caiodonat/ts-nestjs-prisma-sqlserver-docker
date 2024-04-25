@@ -35,7 +35,6 @@
 
 > cd tt
 
-> 
 
 ### Required Environment Variables
 
