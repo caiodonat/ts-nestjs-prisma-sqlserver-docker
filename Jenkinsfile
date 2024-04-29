@@ -2,9 +2,11 @@ pipeline {
 	agent any
 
 	stages {
-		stage ('Inicial') {
+		stage ('Build Image') {
 			steps {
-				echo 'Iniciando a pipeline'
+				script {
+					dockerapp = docker.build("cdonat-dev/bk_998877_backend", '-f ./Dockerfile ./src')
+				}
 			}
 		}
 	}
