@@ -4,12 +4,11 @@ pipeline {
 	stages {
 		stage ('Build Image') {
 			steps {
-				script {
-					// dockerapp = docker.build("cdonat-dev/bk_998877_backend")
-					steps {
-						sh 'docker build'
-					}
-				}
+				sh 'docker build'
+				// script {
+				// 	// dockerapp = docker.build("cdonat-dev/bk_998877_backend")
+					
+				// }
 			}
 		}
 	}
