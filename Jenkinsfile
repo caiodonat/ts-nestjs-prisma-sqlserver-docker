@@ -6,7 +6,7 @@ pipeline {
 			steps {
 				// sh 'docker build'
 				script {
-					dockerapp = docker.build("cdonat-dev/bk_998877_backend")	
+					dockerapp = docker.build("cdonat-dev/bk_998877_backend:${env.BUILD_ID}")	
 				}
 			}
 		}
